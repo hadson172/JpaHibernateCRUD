@@ -61,13 +61,13 @@ public class PersonRepository implements PersonDAO
     {
         EntityManager entityManager = EMFProvider.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
-        Optional<R> result = Optional.empty();
+        R result = null;
 
 
         try
         {
             transaction.begin();
-            result = Optional.of(function.apply(entityManager));
+            result = function.apply(entityManager);
             transaction.commit();
         }
 
@@ -78,10 +78,11 @@ public class PersonRepository implements PersonDAO
         }
         finally
         {
-            entityManager.close();
+            if ( (entityManager != null) && (entityManager.isOpen()))
+                entityManager.close();
         }
 
-       return result;
+       return result == null ? Optional.empty() : Optional.of(result);
     }
 
 
