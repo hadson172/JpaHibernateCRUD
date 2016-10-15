@@ -4,8 +4,13 @@
 
     <persistence-unit name="CrudPU" transaction-type="RESOURCE_LOCAL">
 
-        <class>crudapp.model.Person</class>
 
+
+        <class>crudapp.model.Customer</class>
+        <class>crudapp.model.Order</class>
+        <class>crudapp.model.ChocolateBox</class>
+
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
@@ -13,7 +18,7 @@
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/CRUDdb"/>
             <property name="hibernate.connection.username" value="postgres"/>
             <property name="hibernate.connection.password" value="piotrek"/>
-            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
 
 

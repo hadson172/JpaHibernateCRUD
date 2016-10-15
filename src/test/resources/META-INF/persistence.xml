@@ -3,7 +3,12 @@
 
 <persistence-unit name="CrudPU" transaction-type="RESOURCE_LOCAL">
 
-    <class>crudapp.model.Person</class>
+
+    <class>crudapp.model.Customer</class>
+    <class>crudapp.model.Order</class>
+    <class>crudapp.model.ChocolateBox</class>
+
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
     <properties>
         <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
