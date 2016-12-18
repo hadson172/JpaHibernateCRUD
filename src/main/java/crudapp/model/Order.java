@@ -1,17 +1,16 @@
 package crudapp.model;
 
 
-import com.sun.istack.internal.NotNull;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "Orders")
-public class Order
-{
+public class Order {
+
     @Id
     @GeneratedValue
     private Long id;
@@ -26,27 +25,24 @@ public class Order
 
 
     @NotNull
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ChocolateBox> chocolateBoxes = new HashSet<>();
 
 
+    public Order() {
+    }
 
-    public Order() {}
 
-
-    public Order(ZonedDateTime zonedDateTime)
-    {
+    public Order(ZonedDateTime zonedDateTime) {
         this.executionDate = zonedDateTime;
     }
 
 
-    public void setCustomer(Customer customer)
-    {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
-    public void addChocolateBox(ChocolateBox box)
-    {
+    public void addChocolateBox(ChocolateBox box) {
         chocolateBoxes.add(box);
         box.setOrder(this);
         orderPrice += box.getBoxPrice();

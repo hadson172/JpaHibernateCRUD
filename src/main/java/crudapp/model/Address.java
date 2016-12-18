@@ -1,11 +1,12 @@
 package crudapp.model;
 
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 @Embeddable
-public class Address
-{
+public class Address {
+
     @Column(nullable = false)
     private String city;
 
@@ -16,17 +17,16 @@ public class Address
     private String street;
 
 
-    protected Address() {}
+    protected Address() {
+    }
 
-    public Address(String city, String zipCode, String street)
-    {
+    public Address(String city, String zipCode, String street) {
         this.city = city;
         this.zipCode = zipCode;
         this.street = street;
     }
 
-    public Address(String city, String zipCode)
-    {
+    public Address(String city, String zipCode) {
         this.city = city;
         this.zipCode = zipCode;
     }

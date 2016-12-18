@@ -5,7 +5,6 @@
     <persistence-unit name="CrudPU" transaction-type="RESOURCE_LOCAL">
 
 
-
         <class>crudapp.model.Customer</class>
         <class>crudapp.model.Order</class>
         <class>crudapp.model.ChocolateBox</class>

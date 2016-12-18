@@ -12,15 +12,12 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class CustomerRepository implements CustomerDAO
-{
+public class CustomerRepository implements CustomerDAO {
 
 
     @Override
-    public boolean saveCustomerIfNotExists(Customer customer)
-    {
-        if(!containsCustomer(customer.getUsername()))
-        {
+    public boolean saveCustomerIfNotExists(Customer customer) {
+        if (!containsCustomer(customer.getUsername())) {
             executeInTransaction(em -> em.persist(customer));
             return true;
         }
@@ -29,23 +26,19 @@ public class CustomerRepository implements CustomerDAO
 
     }
 
-
     @Override
-    public Optional<Customer> getCustomerByUsername(String username)
-    {
+    public Optional<Customer> getCustomerByUsername(String username) {
         List<Customer> result = executeInTransactionNonVoid(em ->
-                em.createQuery("SELECT c FROM Customer c WHERE c.username = :username",Customer.class)
-                   .setParameter("username",username)
-                   .getResultList()).orElse(Collections.emptyList());
+                em.createQuery("SELECT c FROM Customer c WHERE c.username = :username", Customer.class)
+                        .setParameter("username", username)
+                        .getResultList()).orElse(Collections.emptyList());
 
         return result.size() == 1 ? Optional.of(result.get(0)) : Optional.empty();
     }
 
     @Override
-    public void updateCustomer(Customer customer)
-    {
-        if(containsCustomer(customer.getUsername()))
-        {
+    public void updateCustomer(Customer customer) {
+        if (containsCustomer(customer.getUsername())) {
             executeInTransaction(em -> em.merge(customer));
         }
 
@@ -53,12 +46,10 @@ public class CustomerRepository implements CustomerDAO
     }
 
     @Override
-    public boolean removeCustomer(String username)
-    {
+    public boolean removeCustomer(String username) {
         Optional<Customer> result = getCustomerByUsername(username);
 
-        if(result.isPresent())
-        {
+        if (result.isPresent()) {
             executeInTransaction(em ->
                     em.remove(em.contains(result.get()) ? result.get() : em.merge(result.get())));
             return true;
@@ -69,14 +60,12 @@ public class CustomerRepository implements CustomerDAO
     }
 
     @Override
-    public boolean containsCustomer(String username)
-    {
+    public boolean containsCustomer(String username) {
         return getCustomerByUsername(username).isPresent();
     }
 
 
-    private void executeInTransaction(Consumer<EntityManager> func)
-    {
+    private void executeInTransaction(Consumer<EntityManager> func) {
         executeInTransactionNonVoid(entityManager ->
         {
             func.accept(entityManager);
@@ -86,28 +75,20 @@ public class CustomerRepository implements CustomerDAO
 
     }
 
-    private <R> Optional<R> executeInTransactionNonVoid(Function<EntityManager,R> function)
-    {
+    private <R> Optional<R> executeInTransactionNonVoid(Function<EntityManager, R> function) {
         EntityManager entityManager = EMFProvider.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         R result = null;
 
-
-        try
-        {
+        try {
             transaction.begin();
             result = function.apply(entityManager);
             transaction.commit();
-        }
-
-        catch (Throwable t)
-        {
+        } catch (Throwable t) {
             t.printStackTrace();
             transaction.rollback();
-        }
-        finally
-        {
-            if ( (entityManager != null) && (entityManager.isOpen()))
+        } finally {
+            if (entityManager.isOpen())
                 entityManager.close();
         }
 

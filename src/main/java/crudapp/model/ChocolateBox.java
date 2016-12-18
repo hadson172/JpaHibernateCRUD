@@ -1,14 +1,13 @@
 package crudapp.model;
 
-import com.sun.istack.internal.NotNull;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-public class ChocolateBox
-{
+public class ChocolateBox {
+
     @Id
     @GeneratedValue
     private Long id;
@@ -24,32 +23,28 @@ public class ChocolateBox
     @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyEnumerated(EnumType.STRING)
     @CollectionTable(name = "ChocolateBox_Content")
-    private Map<Chocolate,Integer> chocolates = new HashMap<>();
+    private Map<Chocolate, Integer> chocolates = new HashMap<>();
 
 
-    public ChocolateBox(){}
+    public ChocolateBox() {
+    }
 
 
-
-    public void setOrder(Order order)
-    {
+    public void setOrder(Order order) {
         this.order = order;
     }
 
-    public void addChocolate(Chocolate chocolate)
-    {
-        this.chocolates.computeIfPresent(chocolate,(k,v) -> v + 1);
-        this.chocolates.computeIfAbsent(chocolate,k -> 1);
+    public void addChocolate(Chocolate chocolate) {
+        this.chocolates.computeIfPresent(chocolate, (k, v) -> v + 1);
+        this.chocolates.computeIfAbsent(chocolate, k -> 1);
         this.boxPrice += chocolate.getChocolatePrice();
     }
 
-    public double getBoxPrice()
-    {
+    public double getBoxPrice() {
         return boxPrice;
     }
 
-    public Map<Chocolate, Integer> getChocolates()
-    {
+    public Map<Chocolate, Integer> getChocolates() {
         return chocolates;
     }
 

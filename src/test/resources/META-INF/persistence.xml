@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
 
-<persistence-unit name="CrudPU" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="CrudPU" transaction-type="RESOURCE_LOCAL">
 
 
-    <class>crudapp.model.Customer</class>
-    <class>crudapp.model.Order</class>
-    <class>crudapp.model.ChocolateBox</class>
+        <class>crudapp.model.Customer</class>
+        <class>crudapp.model.Order</class>
+        <class>crudapp.model.ChocolateBox</class>
 
-    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
-    <properties>
-        <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
-        <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
-        <property name="hibernate.connection.url" value="jdbc:h2:./src/test/db/test"/>
-        <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
-    </properties>
-</persistence-unit>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+            <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
+            <property name="hibernate.connection.url" value="jdbc:h2:./src/test/db/test"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+        </properties>
+    </persistence-unit>
 
 </persistence>

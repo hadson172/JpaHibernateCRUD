@@ -1,15 +1,14 @@
 package crudapp.model;
 
 
-import com.sun.istack.internal.NotNull;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Customer
-{
+public class Customer {
+
     @Id
     @GeneratedValue
     private Long id;
@@ -30,14 +29,14 @@ public class Customer
     private Address address;
 
     @NotNull
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Order> orders = new HashSet<>();
 
 
-    protected Customer() {}
+    protected Customer() {
+    }
 
-    public Customer(String username, String firstName, String lastName, int phoneNumber, Address address)
-    {
+    public Customer(String username, String firstName, String lastName, int phoneNumber, Address address) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -69,14 +68,12 @@ public class Customer
         return address;
     }
 
-    public void addOrder(Order order)
-    {
+    public void addOrder(Order order) {
         orders.add(order);
         order.setCustomer(this);
     }
 
-    public Set<Order> getOrders()
-    {
+    public Set<Order> getOrders() {
         return this.orders;
     }
 
